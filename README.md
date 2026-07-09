@@ -1,60 +1,63 @@
-# FitNova AI Sales Call Intelligence
+# FitNova AI Sales Call Intelligence Prototype
 
 ## Overview
 
 FitNova AI Sales Call Intelligence is an end-to-end AI-powered application that analyzes customer sales calls and provides actionable insights for sales managers.
 
-The system accepts an uploaded call recording, generates a transcript using Groq Whisper, assigns speaker labels, redacts sensitive information, evaluates the conversation using an AI workflow, stores the results in a database, and displays the analysis through an interactive dashboard.
+The application accepts an uploaded call recording, generates a transcript using Groq Whisper, identifies speakers, redacts sensitive information, evaluates the conversation using an AI workflow, stores the processed results in a database, and displays insights through an interactive dashboard.
+
+This project was developed as a working prototype to demonstrate an AI-driven sales call intelligence pipeline.
 
 ---
 
-## Features
+# Features
 
-* Upload customer call recordings
-* Automatic speech-to-text transcription using Groq Whisper
-* Advisor/Customer speaker identification
-* Automatic PII redaction (phone numbers, email addresses, card numbers, UPI IDs, etc.)
-* AI-powered call analysis
-* Sales quality scoring
-* Compliance issue detection
-* AI-generated call summary
-* Recommendations for advisor improvement
-* Interactive analytics dashboard
-
----
-
-## Tech Stack
-
-### Frontend
-
-* React 18
-* TypeScript
-* Vite
-* Tailwind CSS
-* Axios
-* Recharts
-* React Router
-
-### Backend
-
-* FastAPI
-* SQLAlchemy
-* SQLite
-* Pydantic
-* Python
-
-### AI Services
-
-* Groq Whisper Large v3 (Speech Transcription)
-* LangGraph-based analysis workflow
-* Rule-based speaker diarization
-* Regex-based PII redaction
+- Upload customer sales call recordings
+- Automatic speech-to-text transcription using Groq Whisper Large v3
+- Advisor and Customer speaker identification
+- Automatic PII (Personally Identifiable Information) redaction
+- AI-powered call analysis
+- Sales quality scoring
+- Compliance issue detection
+- AI-generated call summary
+- AI-generated recommendations
+- Interactive dashboard
+- Database storage for processed calls
 
 ---
 
-## Project Structure
+# Technology Stack
 
-```text
+## Frontend
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Axios
+- React Router
+- Recharts
+
+## Backend
+
+- FastAPI
+- Python
+- SQLAlchemy
+- SQLite
+- Pydantic
+
+## AI Components
+
+- Groq Whisper Large v3 (Speech Transcription)
+- LangGraph-based AI Analysis Workflow
+- Rule-based Speaker Identification
+- Regex-based PII Redaction
+
+---
+
+# Project Structure
+
+```
 fitnova-intelligence/
 
 ├── backend/
@@ -79,46 +82,43 @@ fitnova-intelligence/
 
 ---
 
-## Processing Pipeline
+# Installation
 
-1. Upload an audio file
-2. Generate transcription using Groq Whisper
-3. Assign Advisor/Customer speaker labels
-4. Redact personally identifiable information (PII)
-5. Analyze the conversation using the AI workflow
-6. Generate quality scores
-7. Detect compliance issues
-8. Produce a summary and recommendations
-9. Store all results in the database
-10. Display results in the dashboard
+## Backend
 
----
-
-## Installation
-
-### Backend
-
-Navigate to the backend directory:
+Navigate to the backend directory
 
 ```bash
 cd backend
 ```
 
-Create a virtual environment:
+Create a virtual environment
 
 ```bash
 python -m venv venv
 ```
 
-Activate the environment.
+Activate the environment
 
-Install dependencies:
+Windows
+
+```bash
+venv\Scripts\activate
+```
+
+Linux / macOS
+
+```bash
+source venv/bin/activate
+```
+
+Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Create a `.env` file:
+Create a `.env` file
 
 ```env
 GROQ_API_KEY=your_groq_api_key
@@ -126,13 +126,13 @@ DATABASE_URL=sqlite:///fitnova.db
 UPLOAD_DIR=uploads
 ```
 
-Initialize the database:
+Initialize the database
 
 ```bash
 python seed.py
 ```
 
-Run the backend:
+Start the backend
 
 ```bash
 uvicorn app.main:app --reload
@@ -140,21 +140,21 @@ uvicorn app.main:app --reload
 
 ---
 
-### Frontend
+## Frontend
 
-Navigate to the frontend directory:
+Navigate to frontend
 
 ```bash
 cd frontend
 ```
 
-Install dependencies:
+Install dependencies
 
 ```bash
 npm install
 ```
 
-Run the development server:
+Run the application
 
 ```bash
 npm run dev
@@ -162,72 +162,151 @@ npm run dev
 
 ---
 
-## Deployment
+# Environment Variables
 
-**Frontend**
-
-Hosted on Vercel.
-
-**Backend**
-
-Hosted on Render.
+| Variable | Description |
+|----------|-------------|
+| GROQ_API_KEY | Groq API Key |
+| DATABASE_URL | SQLite Database |
+| UPLOAD_DIR | Upload folder path |
 
 ---
 
-## Implemented Components
+# End-to-End Workflow
 
-* Audio upload
-* Speech transcription
-* Speaker diarization
-* PII redaction
-* AI analysis workflow
-* Call scoring
-* Compliance issue detection
-* Call summary generation
-* Recommendations
-* SQLite database storage
-* Dashboard visualization
+The application processes every uploaded call through the following pipeline:
 
----
-
-## Current Limitations
-
-* Speaker diarization uses a lightweight heuristic approach rather than a dedicated deep-learning diarization model.
-* The quality of transcription depends on the uploaded audio.
-* Analysis accuracy is influenced by transcription quality.
+1. Upload an audio recording.
+2. Generate transcription using Groq Whisper Large v3.
+3. Assign Advisor and Customer speaker labels.
+4. Redact Personally Identifiable Information (PII).
+5. Analyze the conversation using the AI workflow.
+6. Generate sales quality scores.
+7. Detect and flag compliance issues.
+8. Generate an AI summary.
+9. Generate recommendations.
+10. Store all processed data in SQLite.
+11. Display the results through the dashboard.
 
 ---
 
-## Future Improvements
+# What is Real vs Prototype
 
-* Deep-learning-based speaker diarization
-* Real-time call processing
-* Sentiment analysis
-* CRM integration
-* Multi-language support
-* Advanced analytics dashboard
-* Authentication and role-based access control
+## Implemented (Real)
+
+The following components are fully implemented and functional:
+
+- Audio upload
+- FastAPI backend APIs
+- Speech transcription using Groq Whisper Large v3
+- Advisor and Customer speaker identification
+- PII redaction
+- AI-powered analysis workflow
+- Sales quality scoring
+- Compliance issue detection
+- AI-generated summary
+- AI-generated recommendations
+- SQLite database storage
+- Interactive React dashboard
+- Deployment on Render and Vercel
+
+## Prototype / Heuristic Components
+
+- Speaker identification uses a lightweight heuristic approach rather than a dedicated deep-learning speaker diarization model.
+- AI evaluation is prompt-driven using an LLM with predefined scoring criteria and business rules.
+- The project is intended as a working prototype demonstrating the complete end-to-end workflow rather than a production-ready sales intelligence platform.
 
 ---
 
-## Environment Variables
+# Design Decisions
 
-| Variable       | Description                        |
-| -------------- | ---------------------------------- |
-| `GROQ_API_KEY` | Groq API key for transcription     |
-| `DATABASE_URL` | SQLite database connection         |
-| `UPLOAD_DIR`   | Directory for uploaded audio files |
+The project was designed to demonstrate an end-to-end AI sales call intelligence pipeline while keeping the architecture simple, maintainable, and easy to deploy.
+
+### FastAPI
+
+Chosen for its performance, simplicity, and automatic API documentation.
+
+### React + Vite
+
+Used to build a responsive and modern user interface with fast development and build times.
+
+### Groq Whisper Large v3
+
+Used for accurate speech transcription without requiring heavy local inference.
+
+### SQLite
+
+Chosen because it is lightweight, requires no external database server, and simplifies deployment.
+
+### Speaker Identification
+
+A lightweight heuristic-based approach is used to assign Advisor and Customer labels, allowing the prototype to demonstrate the overall processing pipeline without relying on heavy diarization models.
+
+### LangGraph Workflow
+
+The AI analysis engine follows a structured workflow that evaluates conversations, generates scores, detects issues, and produces recommendations.
 
 ---
 
-## Author
+# Trade-offs
+
+To keep the project lightweight and suitable for an internship prototype, several practical trade-offs were made:
+
+- Heuristic speaker identification instead of deep-learning speaker diarization.
+- SQLite instead of PostgreSQL.
+- Groq Whisper API instead of locally hosted Whisper.
+- Prompt-driven AI evaluation instead of a custom-trained machine learning model.
+
+These decisions reduced infrastructure complexity while still demonstrating the complete workflow.
+
+---
+
+# Known Limitations
+
+- Speaker identification is heuristic-based and may not perfectly distinguish speakers in every conversation.
+- Poor audio quality can reduce transcription accuracy.
+- AI analysis depends on transcription quality.
+- The application processes uploaded recordings only and does not support live call streaming.
+
+---
+
+# Future Improvements
+
+Potential future enhancements include:
+
+- Deep-learning speaker diarization using PyAnnote
+- Real-time call processing
+- Sentiment analysis
+- CRM integration
+- Team performance analytics
+- Multi-language transcription
+- Semantic search using vector embeddings
+- Authentication and role-based access control
+
+---
+
+# Live Demo
+
+## Frontend
+
+https://fitnova-intelligence-nine.vercel.app/director
+
+## Director Dashboard
+
+https://fitnova-intelligence-nine.vercel.app/director
+
+
+---
+
+# Author
 
 **Gowtham K**
 
-GitHub: https://github.com/kgowtham590-spec
+GitHub:
+https://github.com/kgowtham590-spec
 
 ---
 
-## License
+# License
 
 This project was developed as part of an AI Engineering internship assignment for evaluation and educational purposes.
