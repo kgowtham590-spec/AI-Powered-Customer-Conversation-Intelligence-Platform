@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 from app.database.session import get_db
 from app.database.models import Team, Advisor, Call, Issue, Organization, Score
+from app.core.config import settings
 from typing import List
 
 router = APIRouter()
@@ -68,4 +69,36 @@ def get_analytics(db: Session = Depends(get_db)):
         "team_rankings": [{"name": r[0], "score": round(r[1] or 0.0, 2)} for r in team_rankings],
         "advisor_rankings": [{"name": r[0], "score": round(r[1] or 0.0, 2)} for r in advisor_rankings],
         "severity_breakdown": [{"severity": r[0], "count": r[1]} for r in severity_breakdown]
+    }
+
+@router.get("/debug")
+def debug_config():
+    key = settings.GROQ_API_KEY
+    if not key:
+        return {
+            "groq_api_key_configured": False,
+            "groq_model": settings.GROQ_MODEL,
+            "error": "No Groq API key found in settings"
+        }
+    
+    masked_key = f"{key[:6]}...{key[-4:]}" if len(key) > 10 else "too short"
+    
+    try:
+        from groq import Groq
+        client = Groq(api_key=key)
+        # Try a quick list models call to verify it works
+        models = client.models.list()
+        connection_status = "success"
+        error_msg = None
+    except Exception as e:
+        connection_status = "failed"
+        error_msg = str(e)
+
+    return {
+        "groq_api_key_configured": True,
+        "groq_api_key_length": len(key),
+        "groq_api_key_masked": masked_key,
+        "groq_model": settings.GROQ_MODEL,
+        "groq_client_connection": connection_status,
+        "groq_client_error": error_msg
     }
