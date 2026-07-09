@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from app.database.session import get_db
-from app.database.models import Call, Advisor, Team, TranscriptSegment, Score, Issue
+from app.database.models import Call, Advisor, Team, TranscriptSegment, Score, Issue, ProcessingLog
 from app.schemas.schemas import CallDetailResponse
 from typing import List, Optional
 
@@ -74,3 +74,17 @@ def get_call_detail(call_id: str, db: Session = Depends(get_db)):
         scores=[s for s in call.scores],
         issues=[i for i in call.issues]
     )
+
+@router.get("/{call_id}/logs")
+def get_call_logs(call_id: str, db: Session = Depends(get_db)):
+    logs = db.query(ProcessingLog).filter(ProcessingLog.call_id == call_id).order_by(ProcessingLog.timestamp.asc()).all()
+    return [
+        {
+            "id": l.id,
+            "stage": l.stage,
+            "status": l.status,
+            "message": l.message,
+            "timestamp": l.timestamp
+        }
+        for l in logs
+    ]
