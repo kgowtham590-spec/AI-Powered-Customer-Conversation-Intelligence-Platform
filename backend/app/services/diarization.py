@@ -1,20 +1,34 @@
-import logging
+def diarize(self, audio_path: str, transcript_segments: list) -> list:
+    diarized_segments = []
 
-logger = logging.getLogger(__name__)
+    current_speaker = "Advisor"
 
-class DiarizationService:
-    def __init__(self):
-        self.has_pipeline = False
-        logger.info("Diarization Service initialized. Configured for fallback-first execution.")
+    for i, seg in enumerate(transcript_segments):
 
-    def diarize(self, audio_path: str, transcript_segments: list) -> list:
-        diarized_segments = []
-        for i, seg in enumerate(transcript_segments):
-            speaker = seg.get("speaker", "Advisor" if i % 2 == 0 else "Customer")
-            diarized_segments.append({
-                "start": seg["start"],
-                "end": seg["end"],
-                "speaker": speaker,
-                "text": seg["text"]
-            })
-        return diarized_segments
+        if i > 0:
+            previous = transcript_segments[i - 1]
+
+            # Switch speaker after long pause
+            if seg["start"] - previous["end"] > 1.0:
+                current_speaker = (
+                    "Customer"
+                    if current_speaker == "Advisor"
+                    else "Advisor"
+                )
+
+            # Switch speaker for short acknowledgements
+            elif len(seg["text"].split()) <= 3:
+                current_speaker = (
+                    "Customer"
+                    if current_speaker == "Advisor"
+                    else "Advisor"
+                )
+
+        diarized_segments.append({
+            "start": seg["start"],
+            "end": seg["end"],
+            "speaker": current_speaker,
+            "text": seg["text"]
+        })
+
+    return diarized_segments
