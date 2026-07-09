@@ -118,12 +118,12 @@ Install dependencies
 pip install -r requirements.txt
 ```
 
-Create a `.env` file
+Create a `.env` file inside the `backend` directory and add the following variables:
 
 ```env
 GROQ_API_KEY=your_groq_api_key
-DATABASE_URL=sqlite:///fitnova.db
-UPLOAD_DIR=uploads
+GROQ_MODEL=whisper-large-v3
+HF_TOKEN=your_huggingface_token
 ```
 
 Initialize the database
@@ -166,9 +166,9 @@ npm run dev
 
 | Variable | Description |
 |----------|-------------|
-| GROQ_API_KEY | Groq API Key |
-| DATABASE_URL | SQLite Database |
-| UPLOAD_DIR | Upload folder path |
+| `GROQ_API_KEY` | API key used for Groq services. |
+| `GROQ_MODEL` | Groq Whisper model used for speech transcription. |
+| `HF_TOKEN` | Hugging Face access token used by the speaker identification component. |
 
 ---
 
