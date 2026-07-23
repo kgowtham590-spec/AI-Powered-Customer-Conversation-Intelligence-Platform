@@ -194,7 +194,7 @@ Frontend runs at `http://localhost:5173`
 - **Director Dashboard:** [fitnova-intelligence-nine.vercel.app/director](https://fitnova-intelligence-nine.vercel.app/director)
 - **Backend API:** [fitnova-backend-h4uh.onrender.com](https://fitnova-backend-h4uh.onrender.com)
 
-> Note: the backend is on Render's free tier, which cold-starts after inactivity. If you're sharing this link during a screening call, hit the API once beforehand to warm it up.
+> Note: the backend is on Render's free tier, which cold-starts after inactivity.
 
 ---
 
@@ -202,7 +202,3 @@ Frontend runs at `http://localhost:5173`
 
 **Gowtham K**
 [GitHub](https://github.com/kgowtham590-spec)
-
-## License
-
-Developed as an internship prototype for educational and demonstration purposes.
